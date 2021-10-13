@@ -10,6 +10,8 @@ CREATE TABLE `Messages` (
   `message` MEDIUMTEXT NULL DEFAULT NULL,
   `Room id` INTEGER NULL DEFAULT NULL,
   `User id` INTEGER NULL DEFAULT NULL,
+  `roomname` text,
+  `username` text,
   PRIMARY KEY (`id`)
 );
 
@@ -18,7 +20,7 @@ DROP TABLE IF EXISTS `Rooms`;
 
 CREATE TABLE `Rooms` (
   `id` INTEGER,
-  `name` MEDIUMTEXT NULL DEFAULT NULL,
+  `roomname` MEDIUMTEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -26,7 +28,7 @@ DROP TABLE IF EXISTS `Users`;
 
 CREATE TABLE `Users` (
   `id` INTEGER,
-  `name` MEDIUMTEXT NULL DEFAULT NULL,
+  `username` MEDIUMTEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
