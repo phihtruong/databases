@@ -16,12 +16,15 @@ var mysql = require('mysql2');
 //make a function returning a promise.
 // export the function.
 
-let connection = mysql.createConnection({
+const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'chatterbox',
   database: 'chat'
 });
+db.connect();
+module.exports.db = db;
+// console.log(module.exports.db);
 
 // var Users = {};
 // var Messages = {};
@@ -39,16 +42,45 @@ let connection = mysql.createConnection({
 //   }
 // });
 
-exports.query = connection.connect(queryStr, (query) => {
-  return new Promise((resolve, reject) => {
-    connection.query(query, (err, results, fields) => {
-      if (err) {
-        throw 'Fail to connect to DB.';
-        reject(err);
-      } else {
-        console.log('Connect to DB, results = ', results);
-        resolve(results);
-      }
-    });
-  });
-});
+// exports.query = (sql, post = []) => {
+//   return new Promise((resolve, reject) => {
+//     db.connect((err) => {
+//       if (err) {
+//         throw err;
+//       }
+//       console.log('Connected to chat database...');
+//       if (post.length !== 0) {
+//         db.query(sql, post, (err, result) => {
+//           if (err) {
+//             reject(err);
+//           }
+//           console.log('SQL posted to db: ', post);
+//           resolve(result);
+//         });
+//       } else {
+//         console.log('retrieving from db');
+//         db.query(sql, [], (err, results) => {
+//           if (err) {
+//             reject(err);
+//           }
+//           console.log('retrieved from db: ', results);
+//           resolve(results);
+//         });
+//       }
+//     });
+//   });
+// };
+
+// exports.query = connection.connect(queryStr, (query) => {
+//   return new Promise((resolve, reject) => {
+//     connection.query(query, (err, results, fields) => {
+//       if (err) {
+//         throw 'Fail to connect to DB.';
+//         reject(err);
+//       } else {
+//         console.log('Connect to DB, results = ', results);
+//         resolve(results);
+//       }
+//     });
+//   });
+// });

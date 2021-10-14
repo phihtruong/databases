@@ -16,7 +16,7 @@ describe('Persistent Node Chat Server', () => {
   beforeAll((done) => {
     dbConnection.connect();
 
-       const tablename = 'messages'; // TODO: fill this out
+       const tablename = 'users'; // TODO: fill this out
 
     /* Empty the db table before all tests so that multiple tests
      * (or repeated runs of the tests)  will not fail when they should be passing
@@ -43,7 +43,7 @@ describe('Persistent Node Chat Server', () => {
 
         /* TODO: You might have to change this test to get all the data from
          * your message table, since this is schema-dependent. */
-        const queryString = 'SELECT * FROM messages';
+        const queryString = 'SELECT * FROM users';
         const queryArgs = [];
 
         dbConnection.query(queryString, queryArgs, (err, results) => {
@@ -51,10 +51,11 @@ describe('Persistent Node Chat Server', () => {
             throw err;
           }
           // Should have one result:
+          console.log('test retrieve: ', results);
           expect(results.length).toEqual(1);
-
+          console.log(results[0].username);
           // TODO: If you don't have a column named text, change this test.
-          expect(results[0].message).toEqual(message);
+          expect(results[0].username).toEqual(username);
           done();
         });
       })
@@ -63,28 +64,28 @@ describe('Persistent Node Chat Server', () => {
       });
   });
 
-  it('Should output all messages from the DB', (done) => {
-    // Let's insert a message into the db
-       const queryString = 'SELECT * FROM messages';
-       const queryArgs = [];
-    /* TODO: The exact query string and query args to use here
-     * depend on the schema you design, so I'll leave them up to you. */
-    dbConnection.query(queryString, queryArgs, (err) => {
-      if (err) {
-        throw err;
-      }
+  // it('Should output all messages from the DB', (done) => {
+  //   // Let's insert a message into the db
+  //      const queryString = 'SELECT * FROM messages';
+  //      const queryArgs = [];
+  //   /* TODO: The exact query string and query args to use here
+  //    * depend on the schema you design, so I'll leave them up to you. */
+  //   dbConnection.query(queryString, queryArgs, (err) => {
+  //     if (err) {
+  //       throw err;
+  //     }
 
-      // Now query the Node chat server and see if it returns the message we just inserted:
-      axios.get(`${API_URL}/messages`)
-        .then((response) => {
-          const messageLog = response.data;
-          expect(messageLog[0].message).toEqual(message);
-          expect(messageLog[0].roomname).toEqual(roomname);
-          done();
-        })
-        .catch((err) => {
-          throw err;
-        });
-    });
-  });
+  //     // Now query the Node chat server and see if it returns the message we just inserted:
+  //     axios.get(`${API_URL}/messages`)
+  //       .then((response) => {
+  //         const messageLog = response.data;
+  //         expect(messageLog[0].message).toEqual(message);
+  //         expect(messageLog[0].roomname).toEqual(roomname);
+  //         done();
+  //       })
+  //       .catch((err) => {
+  //         throw err;
+  //       });
+  //   });
+  // });
 });
